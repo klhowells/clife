@@ -1,6 +1,6 @@
 # Conway's Game of Life - PyQt5 Implementation
 
-This project is a PyQt5-based implementation of Conway's Game of Life, a cellular automaton devised by mathematician John Conway. The program simulates the evolution of cells on a grid based on simple rules, creating complex and fascinating patterns.
+This project is a PyQt5-based implementation of Conway's Game of Life, a cellular automaton devised by mathematician John Conway. The program simulates the evolution of cells on a grid based on simple rules, creating complex and fascinating patterns. Created with (by) CoPilot AI.
 
 ## Features
 
