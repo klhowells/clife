@@ -49,9 +49,16 @@ class GameOfLifeGUI(QMainWindow):
 
         self.random_slider = QSlider(Qt.Horizontal)
         self.random_slider.setRange(0, 100)
-        self.random_slider.setValue(50)
+        self.random_slider.setValue(30)
         controls_layout.addWidget(QLabel("Random %"))
         controls_layout.addWidget(self.random_slider)
+
+        self.speed_slider = QSlider(Qt.Horizontal)
+        self.speed_slider.setRange(0, 1000)  # Speed in milliseconds
+        self.speed_slider.setValue(100)  # Default speed is 100ms
+        self.speed_slider.valueChanged.connect(self.update_timer_interval)
+        controls_layout.addWidget(QLabel("Speed (ms)"))
+        controls_layout.addWidget(self.speed_slider)
 
     def start_game(self):
         self.timer.start(100)  # Update every 100ms
@@ -71,6 +78,9 @@ class GameOfLifeGUI(QMainWindow):
         percentage = self.random_slider.value()
         self.grid.randomize(percentage)
         self.grid_widget.update()
+
+    def update_timer_interval(self):
+        self.timer.setInterval(self.speed_slider.value())
 
 class GridWidget(QWidget):
     def __init__(self, grid, cell_size):
