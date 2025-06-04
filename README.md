@@ -4,7 +4,7 @@ This project is a PyQt5-based implementation of Conway's Game of Life, a cellula
 
 ## Features
 
-- **Grid Setup**: A 100x100 grid of squares, each 10 pixels wide.
+- **Grid Setup**: An 80x80 grid of squares (toroidal), each 10 pixels wide.
 - **Cell States**: "Live" cells are displayed in light green, and "dead" cells are white.
 - **Interactive Controls**:
   - Click on individual cells to toggle their state.
