@@ -1,0 +1,25 @@
+body {
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(100, 10px);
+    grid-template-rows: repeat(100, 10px);
+    gap: 1px; /* Thin grid lines */
+}
+
+.cell {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border: 1px solid black; /* Thin black grid lines */
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cell.live {
+    background-color: lightgreen; /* Live state color */
+}
+
+.cell:hover {
+    background-color: rgba(200, 200, 200, 0.5); /* Hover effect */
+}

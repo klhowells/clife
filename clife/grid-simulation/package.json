@@ -1,0 +1,24 @@
+{
+  "name": "grid-simulation",
+  "version": "1.0.0",
+  "description": "A grid simulation project that allows users to interact with a grid of cells, toggling their state and running simulations.",
+  "main": "src/App.tsx",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2"
+  },
+  "homepage": "http://yourhomepage.com",
+  "license": "MIT"
+}
