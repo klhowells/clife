@@ -9,9 +9,9 @@ class GameOfLifeGUI(QMainWindow):
         self.setWindowTitle("Conway's Game of Life")
         self.setGeometry(100, 100, 800, 800)
 
-        self.grid_size = 80  # Number of cells in each dimension
+        self.grid_size = (80, 81)  # Updated to 80 rows and 81 columns
         self.cell_size = 10
-        self.grid = Grid(self.grid_size, self.grid_size)
+        self.grid = Grid(self.grid_size[0], self.grid_size[1])
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_simulation)
@@ -59,6 +59,10 @@ class GameOfLifeGUI(QMainWindow):
         self.speed_slider.valueChanged.connect(self.update_timer_interval)
         controls_layout.addWidget(QLabel("Speed (ms)"))
         controls_layout.addWidget(self.speed_slider)
+
+        exit_button = QPushButton("Exit")
+        exit_button.clicked.connect(self.close)
+        controls_layout.addWidget(exit_button)
 
     def start_game(self):
         self.timer.start(100)  # Update every 100ms

@@ -1,6 +1,6 @@
 # Grid Simulation Project
 
-This project implements a grid simulation using React. The grid consists of 100x100 squares, each 10 pixels wide, allowing users to interact with the cells by toggling their state and controlling the simulation.
+This project implements a grid simulation using React. The grid consists of 80x81 squares, each 10 pixels wide, allowing users to interact with the cells by toggling their state and controlling the simulation.
 
 ## Features
 
