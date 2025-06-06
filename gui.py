@@ -102,7 +102,7 @@ class GridWidget(QWidget):
                 color = QColor("lightgreen") if self.grid.grid[row][col] == 1 else QColor("white")
                 painter.fillRect(rect_x, rect_y, self.cell_size, self.cell_size, color)
                 painter.setPen(QColor("black"))
-                painter.drawRect(rect_x, rect_y, self.cell_size, self.cell_size)
+                #painter.drawRect(rect_x, rect_y, self.cell_size, self.cell_size)
 
     def mousePressEvent(self, event):
         self.handle_mouse_event(event)
