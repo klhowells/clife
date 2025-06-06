@@ -47,14 +47,14 @@ class HexagonalGridLogic:
         for cell in self.grid.values():
             cell['state'] = 0
 
-    def get_next_state(self):
+    def get_next_state(self, survival_min, survival_max, birth_min, birth_max):
         new_grid = {}
         for (row, col), cell in self.grid.items():
             neighbors = sum(self.grid[neighbor]['state'] for neighbor in cell['neighbors'])
             if cell['state'] == 1:
-                # Try B2/S34 - more dynamic hex rule
-                new_grid[(row, col)] = {'state': 1 if neighbors in [1, 2] else 0, 'neighbors': cell['neighbors']}
+                # Use dynamic survival parameters
+                new_grid[(row, col)] = {'state': 1 if survival_min <= neighbors <= survival_max else 0, 'neighbors': cell['neighbors']}
             else:
-                # Birth on exactly 2-3 neighbors
-                new_grid[(row, col)] = {'state': 1 if neighbors in [2, 3] else 0, 'neighbors': cell['neighbors']}
+                # Use dynamic birth parameters
+                new_grid[(row, col)] = {'state': 1 if birth_min <= neighbors <= birth_max else 0, 'neighbors': cell['neighbors']}
         self.grid = new_grid

@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QSlider, QLabel, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QSlider, QLabel, QHBoxLayout, QComboBox
 from PyQt5.QtGui import QPainter, QColor, QPolygon
 from PyQt5.QtCore import QPoint, Qt, QTimer
 from hexagonal_grid import HexagonalGridLogic
@@ -96,6 +96,31 @@ class HexagonalClife(QMainWindow):
         controls_layout.addWidget(QLabel("Speed (ms)"))
         controls_layout.addWidget(self.speed_slider)
 
+        # Add dropdowns for survival and birth parameters
+        controls_layout.addWidget(QLabel("Survival Min"))
+        self.survival_min_dropdown = QComboBox()
+        self.survival_min_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.survival_min_dropdown.setCurrentText("2")
+        controls_layout.addWidget(self.survival_min_dropdown)
+
+        controls_layout.addWidget(QLabel("Survival Max"))
+        self.survival_max_dropdown = QComboBox()
+        self.survival_max_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.survival_max_dropdown.setCurrentText("3")
+        controls_layout.addWidget(self.survival_max_dropdown)
+
+        controls_layout.addWidget(QLabel("Birth Min"))
+        self.birth_min_dropdown = QComboBox()
+        self.birth_min_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.birth_min_dropdown.setCurrentText("3")
+        controls_layout.addWidget(self.birth_min_dropdown)
+
+        controls_layout.addWidget(QLabel("Birth Max"))
+        self.birth_max_dropdown = QComboBox()
+        self.birth_max_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.birth_max_dropdown.setCurrentText("3")
+        controls_layout.addWidget(self.birth_max_dropdown)
+
         exit_button = QPushButton("Exit")
         exit_button.clicked.connect(self.close)
         controls_layout.addWidget(exit_button)
@@ -114,8 +139,14 @@ class HexagonalClife(QMainWindow):
         self.timer.stop()  # Stop simulation
 
     def update_simulation(self):
-        self.grid_logic.get_next_state()
-        self.grid_widget.grid = self.grid_logic.grid  # Sync GUI grid with logic grid after each iteration
+        # Pass the current survival and birth parameters to the logic
+        survival_min = int(self.survival_min_dropdown.currentText())
+        survival_max = int(self.survival_max_dropdown.currentText())
+        birth_min = int(self.birth_min_dropdown.currentText())
+        birth_max = int(self.birth_max_dropdown.currentText())
+
+        self.grid_logic.get_next_state(survival_min, survival_max, birth_min, birth_max)
+        self.grid_widget.grid = self.grid_logic.grid  # Sync GUI grid with logic grid
         self.grid_widget.update()
 
     def reset_game(self):
