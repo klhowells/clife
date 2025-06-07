@@ -56,7 +56,7 @@ class HexagonalClife(QMainWindow):
         self.setWindowTitle("Hexagonal Conway's Game of Life")
         self.resize(800, 600)  # Make the window resizable
 
-        hex_size = 10  # Adjusted hexagon size to fit 80x80 grid
+        hex_size = 8  # Adjusted hexagon size to fit 80x80 grid
         self.grid_widget = HexagonalGrid(80, 80, hex_size)
         self.grid_logic = HexagonalGridLogic(80, 80)
         self.timer = QTimer()
@@ -64,66 +64,85 @@ class HexagonalClife(QMainWindow):
         self.timer.setSingleShot(False)
 
         layout = QVBoxLayout()
-        controls_layout = QHBoxLayout()
-        layout.addLayout(controls_layout)
+        controls_layout_top = QHBoxLayout()
+        controls_layout_bottom = QHBoxLayout()
+        exit_layout = QHBoxLayout()
+        layout.addLayout(controls_layout_top)
+        layout.addLayout(controls_layout_bottom)
 
+        # --- Top row controls ---
         start_button = QPushButton("Start")
         start_button.clicked.connect(self.start_game)
-        controls_layout.addWidget(start_button)
+        controls_layout_top.addWidget(start_button)
 
         stop_button = QPushButton("Stop")
         stop_button.clicked.connect(self.stop_game)
-        controls_layout.addWidget(stop_button)
+        controls_layout_top.addWidget(stop_button)
 
         reset_button = QPushButton("Reset")
         reset_button.clicked.connect(self.reset_game)
-        controls_layout.addWidget(reset_button)
+        controls_layout_top.addWidget(reset_button)
 
         random_button = QPushButton("Random")
         random_button.clicked.connect(self.randomize_grid)
-        controls_layout.addWidget(random_button)
+        controls_layout_top.addWidget(random_button)
 
+        controls_layout_top.addWidget(QLabel("Random %"))
         self.random_slider = QSlider(Qt.Horizontal)
         self.random_slider.setRange(1, 100)
         self.random_slider.setValue(30)
-        controls_layout.addWidget(QLabel("Random %"))
-        controls_layout.addWidget(self.random_slider)
+        self.random_slider.setFixedWidth(100)
+        controls_layout_top.addWidget(self.random_slider)
 
+        # --- Bottom row controls ---
+        label_surv_min = QLabel("Survival Min")
+        label_surv_min.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        controls_layout_bottom.addWidget(label_surv_min)
+        self.survival_min_dropdown = QComboBox()
+        self.survival_min_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.survival_min_dropdown.setCurrentText("1")
+        controls_layout_bottom.addWidget(self.survival_min_dropdown)
+
+        label_surv_max = QLabel("Survival Max")
+        label_surv_max.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        controls_layout_bottom.addWidget(label_surv_max)
+        self.survival_max_dropdown = QComboBox()
+        self.survival_max_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.survival_max_dropdown.setCurrentText("3")
+        controls_layout_bottom.addWidget(self.survival_max_dropdown)
+
+        label_birth_min = QLabel("Birth Min")
+        label_birth_min.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        controls_layout_bottom.addWidget(label_birth_min)
+        self.birth_min_dropdown = QComboBox()
+        self.birth_min_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.birth_min_dropdown.setCurrentText("2")
+        controls_layout_bottom.addWidget(self.birth_min_dropdown)
+
+        label_birth_max = QLabel("Birth Max")
+        label_birth_max.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        controls_layout_bottom.addWidget(label_birth_max)
+        self.birth_max_dropdown = QComboBox()
+        self.birth_max_dropdown.addItems([str(i) for i in range(1, 7)])
+        self.birth_max_dropdown.setCurrentText("4")
+        controls_layout_bottom.addWidget(self.birth_max_dropdown)
+
+        label_speed = QLabel("Speed (ms)")
+        label_speed.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        controls_layout_bottom.addWidget(label_speed)
         self.speed_slider = QSlider(Qt.Horizontal)
         self.speed_slider.setRange(1, 1000)
         self.speed_slider.setValue(100)
         self.speed_slider.valueChanged.connect(self.update_timer_interval)
-        controls_layout.addWidget(QLabel("Speed (ms)"))
-        controls_layout.addWidget(self.speed_slider)
+        self.speed_slider.setFixedWidth(100)
+        controls_layout_bottom.addWidget(self.speed_slider)
 
-        # Add dropdowns for survival and birth parameters
-        controls_layout.addWidget(QLabel("Survival Min"))
-        self.survival_min_dropdown = QComboBox()
-        self.survival_min_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.survival_min_dropdown.setCurrentText("1")
-        controls_layout.addWidget(self.survival_min_dropdown)
-
-        controls_layout.addWidget(QLabel("Survival Max"))
-        self.survival_max_dropdown = QComboBox()
-        self.survival_max_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.survival_max_dropdown.setCurrentText("3")
-        controls_layout.addWidget(self.survival_max_dropdown)
-
-        controls_layout.addWidget(QLabel("Birth Min"))
-        self.birth_min_dropdown = QComboBox()
-        self.birth_min_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.birth_min_dropdown.setCurrentText("2")
-        controls_layout.addWidget(self.birth_min_dropdown)
-
-        controls_layout.addWidget(QLabel("Birth Max"))
-        self.birth_max_dropdown = QComboBox()
-        self.birth_max_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.birth_max_dropdown.setCurrentText("4")
-        controls_layout.addWidget(self.birth_max_dropdown)
-
+        # --- Exit button at bottom right ---
         exit_button = QPushButton("Exit")
         exit_button.clicked.connect(self.close)
-        controls_layout.addWidget(exit_button)
+        exit_layout.addStretch()  # Pushes the button to the right
+        exit_layout.addWidget(exit_button)
+        layout.addLayout(exit_layout)
 
         scroll_area = QScrollArea()  # Add a scroll area
         scroll_area.setWidget(self.grid_widget)
