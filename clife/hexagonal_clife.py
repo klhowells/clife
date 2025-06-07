@@ -56,9 +56,9 @@ class HexagonalClife(QMainWindow):
         self.setWindowTitle("Hexagonal Conway's Game of Life")
         self.resize(800, 600)  # Make the window resizable
 
-        hex_size = 8  # Adjusted hexagon size to fit 80x80 grid
-        self.grid_widget = HexagonalGrid(80, 80, hex_size)
-        self.grid_logic = HexagonalGridLogic(80, 80)
+        hex_size = 8  # Adjusted hexagon size to fit 60 row x 100 col grid
+        self.grid_widget = HexagonalGrid(60, 100, hex_size)
+        self.grid_logic = HexagonalGridLogic(60, 100)
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_simulation)
         self.timer.setSingleShot(False)

@@ -17,7 +17,7 @@ This project is a PyQt5-based implementation of Conway's Game of Life, a cellula
   - **Reset**: Clear the grid.
 
 ### Hexagonal Grid Version
-- **Grid Setup**: An 80x80 grid of hexagons (toroidal), dynamically sized to fit the window.
+- **Grid Setup**: A 100 col. x 60 row grid of hexagons (toroidal), dynamically sized to fit the window.
 - **Cell States**: "Live" cells are displayed in light green, and "dead" cells are white.
 - **Interactive Controls**:
   - Click on individual cells to toggle their state.
