@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QSlider, QLabel, QHBoxLayout, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QSlider, QLabel, QHBoxLayout, QComboBox, QScrollArea
 from PyQt5.QtGui import QPainter, QColor, QPolygon
 from PyQt5.QtCore import QPoint, Qt, QTimer
 from hexagonal_grid import HexagonalGridLogic
@@ -54,7 +54,7 @@ class HexagonalClife(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Hexagonal Conway's Game of Life")
-        self.setGeometry(100, 100, 800, 600)
+        self.resize(800, 600)  # Make the window resizable
 
         hex_size = 10  # Adjusted hexagon size to fit 80x80 grid
         self.grid_widget = HexagonalGrid(80, 80, hex_size)
@@ -64,7 +64,7 @@ class HexagonalClife(QMainWindow):
         self.timer.setSingleShot(False)
 
         layout = QVBoxLayout()
-        controls_layout = QHBoxLayout()  # Moved controls to the top
+        controls_layout = QHBoxLayout()
         layout.addLayout(controls_layout)
 
         start_button = QPushButton("Start")
@@ -100,7 +100,7 @@ class HexagonalClife(QMainWindow):
         controls_layout.addWidget(QLabel("Survival Min"))
         self.survival_min_dropdown = QComboBox()
         self.survival_min_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.survival_min_dropdown.setCurrentText("2")
+        self.survival_min_dropdown.setCurrentText("1")
         controls_layout.addWidget(self.survival_min_dropdown)
 
         controls_layout.addWidget(QLabel("Survival Max"))
@@ -112,20 +112,23 @@ class HexagonalClife(QMainWindow):
         controls_layout.addWidget(QLabel("Birth Min"))
         self.birth_min_dropdown = QComboBox()
         self.birth_min_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.birth_min_dropdown.setCurrentText("3")
+        self.birth_min_dropdown.setCurrentText("2")
         controls_layout.addWidget(self.birth_min_dropdown)
 
         controls_layout.addWidget(QLabel("Birth Max"))
         self.birth_max_dropdown = QComboBox()
         self.birth_max_dropdown.addItems([str(i) for i in range(1, 7)])
-        self.birth_max_dropdown.setCurrentText("3")
+        self.birth_max_dropdown.setCurrentText("4")
         controls_layout.addWidget(self.birth_max_dropdown)
 
         exit_button = QPushButton("Exit")
         exit_button.clicked.connect(self.close)
         controls_layout.addWidget(exit_button)
 
-        layout.addWidget(self.grid_widget)  # Grid widget now below controls
+        scroll_area = QScrollArea()  # Add a scroll area
+        scroll_area.setWidget(self.grid_widget)
+        scroll_area.setWidgetResizable(True)
+        layout.addWidget(scroll_area)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
