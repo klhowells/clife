@@ -90,7 +90,7 @@ class HexagonalClife(QMainWindow):
         controls_layout.addWidget(self.random_slider)
 
         self.speed_slider = QSlider(Qt.Horizontal)
-        self.speed_slider.setRange(0, 1000)
+        self.speed_slider.setRange(1, 1000)
         self.speed_slider.setValue(100)
         self.speed_slider.valueChanged.connect(self.update_timer_interval)
         controls_layout.addWidget(QLabel("Speed (ms)"))
