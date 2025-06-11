@@ -12,27 +12,34 @@ class HexagonalGridLogic:
                 self.grid[(row, col)] = {'state': 0, 'neighbors': neighbors}
 
     def get_hex_neighbors(self, row, col):
-        """Get the 6 hexagonal neighbors for offset coordinates (odd-column offset)"""
+        """Get the 6 hexagonal neighbors for offset coordinates (odd-column offset), with wrapping."""
         neighbors = []
-        
+
         if col % 2 == 0:  # Even column
-            directions = [
+            directions = [ # Even Column Neighbors 
                 (-1, -1), (-1, 0),  # NW, NE
                 (0, -1), (0, 1),    # W, E
                 (1, -1), (1, 0)     # SW, SE
             ]
         else:  # Odd column
-            directions = [
+            directions = [ #Odd Column Neighbors
                 (-1, 0), (-1, 1),   # NW, NE
                 (0, -1), (0, 1),    # W, E
                 (1, 0), (1, 1)      # SW, SE
             ]
-        
+
         for dr, dc in directions:
-            nr, nc = row + dr, col + dc
-            if 0 <= nr < self.rows and 0 <= nc < self.cols:
-                neighbors.append((nr, nc))
-        
+            nr = (row + dr) % self.rows  # Wrap vertically
+            nc = (col + dc) % self.cols  # Wrap horizontally
+
+            # Handle negative wrapping
+            if nr < 0:
+                nr += self.rows
+            if nc < 0:
+                nc += self.cols
+
+            neighbors.append((nr, nc))
+
         return neighbors
 
     def toggle_cell(self, row, col):
